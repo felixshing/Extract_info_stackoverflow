@@ -1,6 +1,20 @@
 ## Introducatio
-  A simple example teaches you how to extract data from stackoverflow. 
+  A simple example teaches you how to extract data from StackOverflow. 
 
 ## Install
   This project uses [Flask](https://palletsprojects.com/p/flask/) and [MongoDB](https://www.mongodb.com/). Go check them out if you don't have them locally installed.
-  '''pip install flask'''
+  You could install MongoDB [here](www.mongodb.com/download-center/community)
+  And install flask 
+  ```pip install flask```
+  
+## Usage
+  First step: run stackoverflow.py under the spider folder. 
+  
+  Second step: open your database and run app.py.
+  
+  Finally: open index.html under the templates folder.
+  
+  This example extracts Android-related questions from StackOverflow. You could extract any inforamtions from StackOverflow refering to the code in stackoverflow.py.
+  
+## Maintainers
+  @FelixChan0829
