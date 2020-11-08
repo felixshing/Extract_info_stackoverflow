@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 引入 Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- 引入 echarts.js -->
+    <script src="js/echarts.min.js"></script>
+
+    <style type="text/css">
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      /* body{
+           background-color: #f4f4f4;
+       } */
+    </style>
+  </head>
+  <body>
+    <div style="width: 49%; display: inline ">
+      <h1 align="center">The 10 newest Android-related questions</h1>
+      <div id="new"></div>
+    </div>
+
+    <h1 align="center">The 10 most voted Android-related questions posted in the past week </h1>
+    <div id="most" style="width: 49%; display: inline"></div>
+
+    <div style="width: 49%; display: inline">
+      <h1 align="center">The 10 most voted Android-related questions posted in the past 30 days</h1>
+      <div id="month"></div>
+    </div>
+
+    <br /><br />
+
+
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <h1 align="center">Total views for Android-related questions in the past seven days</h1>
+    <div
+      id="main"
+      style="width: 90%; height: 400px; display: inline-block;text-align: center"
+    ></div>
+
+
+
+    <br /><br />
+
+    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script src="js/jquery.js"></script>
+    <!-- 包括所有已编译的插件 -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+
+    <!-- 酷炫效果 -->
+    <!--script type="text/javascript" src="js/test.js" opacity="0.7"></script-->
+  </body>
+</html>
+<script>
+  $(function () {
+    new Promise(function (resolve, reject) {
+      $.ajax({
+        url: "http://127.0.0.1:5000/get_data",
+        type: "GET",
+        dataType: "JSON",
+        success: function (r) {
+          console.log(r);
+          console.log(r.newest);
+          if (r.code == 1) {
+            let newStr = "";
+            let [timeArr, votesArr] = [[], []];
+            for (let i = 0; i < r.newest.length; i++) {
+              newStr += `<a href="${r.newest[i].url}" target="_blank" class="list-group-item"> ${r.newest[i].title}
+                <span style="position: absolute;right:10px">
+                date:${r.newest[i].times} </span></a>`;
+            }
+            $("#new").append(newStr);
+
+            let mostStr = "";
+            for (let i = 0; i < r.votes.length; i++) {
+              mostStr += `<a href="${r.votes[i].url}" target="_blank" class="list-group-item"> ${r.votes[i].title}
+                <span style="position:absolute;right:10px">
+                votes：${r.votes[i].votes}; views：${r.votes[i].views} ;date:${r.votes[i].times }</span></a>`;
+
+                timeArr.push(r.votes[i].times);
+                votesArr.push(r.votes[i].votes);
+            }
+            $("#most").append(mostStr);
+
+            let monthStr = "";
+            for (let i = 0; i < r.history.length; i++) {
+              monthStr += `<a href="${r.history[i].url}" target="_blank" class="list-group-item"> ${r.history[i].title} <span style="position:absolute;right:10px">
+                votes：${r.history[i].votes} ;views：${r.history[i].views} ;date:${r.history[i].times }</span></a>`;
+            }
+            $("#month").append(monthStr);
+
+
+
+
+            // 基于准备好的dom，初始化echarts实例
+            let myChart = echarts.init(document.getElementById("main"));
+
+            // 指定图表的配置项和数据
+            let option = {
+              tooltip: {
+                trigger: "axis",
+              },
+              xAxis: {
+                type: "category",
+                data: r.last7_view[0]
+              },
+              yAxis: {
+                type: "value",
+              },
+              series: [
+                {
+                  data: r.last7_view[1],
+                  type: "line",
+                },
+              ],
+                grid: {
+              bottom: 150,
+              top: 20,
+              right: 0,
+              left: 170,
+              height: 300
+            },
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+          }
+        },
+      });
+    })
+      .then(function (value) {
+        // 第一个then // 1
+        console.log(value);
+        return value * 2;
+      })
+      .then(function (value) {
+        // 第二个then // 2
+        console.log(value);
+      });
+  });
+</script>
