@@ -4,8 +4,11 @@
 ## Install
   This project uses [Flask](https://palletsprojects.com/p/flask/) and [MongoDB](https://www.mongodb.com/). Go check them out if you don't have them locally installed.
   You could install MongoDB [here](www.mongodb.com/download-center/community)
-  And install flask 
-  ```pip install flask```
+  
+  install flask: 
+  ```Bash
+  pip install flask
+  ```
   
 ## Usage
   First step: run stackoverflow.py under the spider folder. 
@@ -17,4 +20,4 @@
   This example extracts Android-related questions from StackOverflow. You could extract any inforamtions from StackOverflow refering to the code in stackoverflow.py.
   
 ## Maintainers
-  @FelixChan0829
+  [@FelixChan0829](https://github.com/FelixChan0829)
