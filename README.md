@@ -1,4 +1,4 @@
-## Introducatio
+## Introduction
   A simple example teaches you how to extract data from StackOverflow. 
 
 ## Install
@@ -17,7 +17,7 @@
   
   Finally: open index.html under the templates folder.
   
-  This example extracts Android-related questions from StackOverflow. You could extract any inforamtions from StackOverflow refering to the code in stackoverflow.py.
+  This example extracts Android-related questions from StackOverflow. You could extract any inforamtion from StackOverflow referring to the code in stackoverflow.py.
   
 ## Maintainers
   [@FelixChan0829](https://github.com/FelixChan0829)
